@@ -66,12 +66,12 @@ make_fig <- function(dt){
                     min.segment.length = 0,
                     segment.color = "blue",
                     segment.size = 0.3,
-                    size = 4,
+                    size = 4) +
                     # Remove the three lines below for the version with not
                     # all variable
-                    max.overlaps = 20,
-                    force_pull = 0,
-                    force = 5) +
+                    # max.overlaps = 20,
+                    # force_pull = 0,
+                    # force = 5) +
     coord_equal() +
     coord_cartesian(clip = "off") +
     labs(x = "PC1", y = "PC2") +
@@ -116,7 +116,7 @@ data <- file_select()
 message("Preview of data")
 print(head(data, n = 10L))
 # Create output_path for the figure
-fig_path <- make_output_path("figures", "loadings_all", ".jpeg")
+fig_path <- make_output_path("figures", "loadings_noall", ".jpeg")
 # Prep data for the figure (aka select PC1 and PC2)
 fig_dt <- prep_data(data)
 message("Preview of prep data")
@@ -124,4 +124,4 @@ print(head(fig_dt, n = 10L))
 # Make the figure
 fig <- make_fig(fig_dt) 
 # Save the figure
-ggsave(fig_path, fig, width = 6.39, height = 8.71, dpi = 300)
+ggsave(fig_path, fig, width = 6.39, height = 8.71, units = "in", dpi = 300)
