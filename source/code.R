@@ -74,7 +74,7 @@ make_fig <- function(dt){
                     # force = 5) +
     coord_equal() +
     coord_cartesian(clip = "off") +
-    labs(x = "PC1", y = "PC2") +
+    labs(x = "PC1 (70%)", y = "PC2 (16%)") +
     theme(
           axis.line = element_line(color = "black"),
           panel.grid = element_blank(),
@@ -96,7 +96,7 @@ make_fig <- function(dt){
     coord_equal() +
     coord_cartesian(xlim = c(-0.07, 0.06), 
                     ylim = c(-0.1, 0.03)) +
-    labs(x = "PC1", y = "PC2") +
+    labs(x = "PC1 (70%)", y = "PC2 (16%)") +
     theme(
           axis.line = element_line(color = "black"),
           panel.grid = element_blank(),
