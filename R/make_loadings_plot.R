@@ -1,40 +1,13 @@
 # --- Load libraries ---
-suppressPackageStartupMessages({
-  library(tidyverse) 
-  library(ggrepel)
-  library(ggpubr)
-  library(glue)
-})
-message("Tidyverse, ggrepel and ggpubr packages loaded!")
-
-
-# --- Pick input file ---
-file_select <- function(input_path = "data/data.csv"){
-  dt <- read_delim(input_path, 
-                   delim = ",",
-                   na = c("", "NA", "na", "N/A", "n/a", "NaN"),
-                   show_col_types = F) |>
-  # Remove column(s) with only NAs
-  select(where(~ !all(is.na(.x)))) |>
-  # Remove row(s) with only NAs 
-  filter(!if_all(everything(), is.na))
-  message("Data loaded!")
-  return(dt)
-}
-
-
-# --- Define output paths ---
-make_output_path <- function(output_path, filename, ext){
-  dir.create(output_path, showWarnings = F, recursive = T)
-  path <- file.path(output_path, paste0(filename, ext))
-  message("Output path created!")
-  return(path)
-}
+load_or_stop("tidyverse")
+load_or_stop("ggrepel")
+load_or_stop("ggpubr")
+load_or_stop("glue")
 
 
 # --- Make the figure ---
 # 1. Prep the data
-prep_data <- function(input_dt){
+loadings_prep_data <- function(input_dt){
   # Remove rows with any missing data
   dt <- input_dt |>
     filter(dplyr::if_all(tidyselect::everything(), ~ !is.na(.))) |>
@@ -63,7 +36,7 @@ prep_data <- function(input_dt){
   # Create a character vector with only the PC and their respective 
   # explained variance
   pc_var <- dt |>
-    # Drop the first column with the variables
+    # Drop the first column with the rownames (variables' name)
     select(-1) |>
     # Change column names with PC to new_names (add the variane for each PC)
     set_names(new_names) |>
@@ -72,7 +45,8 @@ prep_data <- function(input_dt){
     # Keep only the column names with the pc variance
     names()
   
-  # Remove the first row below the column name from the loadings data
+  # Remove the first row (with the variance) below the column name 
+  # from the loadings data
   dt <- dt |>
     slice(-1)
 
@@ -85,7 +59,7 @@ prep_data <- function(input_dt){
 }
 
 # 2. Make the figure 
-make_fig <- function(dt, pc_var){
+loadings_make_fig <- function(dt, pc_var){
   p1 <- ggplot(dt, aes(x = 0, y = 0)) + 
     geom_segment(aes(xend = pc1, yend = pc2),
                  arrow = arrow(length = unit(0.1, "cm")), 
@@ -95,11 +69,9 @@ make_fig <- function(dt, pc_var){
                     segment.color = "blue",
                     segment.size = 0.3,
                     size = 4) +
-                    # Remove the three lines below for the version with not
-                    # all variable
-                    # max.overlaps = 20,
-                    # force_pull = 0,
-                    # force = 5) +
+                    # For a version that shows all the variable 
+                    # in geom_text_repel() 
+                    # set max.overlaps = 20, force_pull = 0 and force = 5
     coord_equal() +
     coord_cartesian(clip = "off") +
     labs(x = pc_var[1], y = pc_var[2]) +
@@ -139,18 +111,21 @@ make_fig <- function(dt, pc_var){
   return(p)
 }
 
+
 # Select file
-data <- file_select()
+loadings_data <- file_select("data/loadings.csv")
 message("Preview of data")
-print(head(data, n = 10L))
+print(head(loadings_data, n = 10L))
 # Create output_path for the figure
-fig_path <- make_output_path("figures", "loadings_noall", ".jpeg")
+loadings_fig_path <- make_output_path("results/figures", "loadings", ".jpeg")
 # Prep data for the figure (aka select PC1 and PC2)
-fig_dt <- prep_data(data)
+loadings_fig_dt <- loadings_prep_data(loadings_data)
 message("Preview of prep data")
-print(head(fig_dt$dt, n = 10L))
-print(fig_dt$var)
+print(head(loadings_fig_dt$dt, n = 10L))
+print(loadings_fig_dt$var)
 # Make the figure
-fig <- make_fig(fig_dt$dt, fig_dt$var) 
+loadings_fig <- loadings_make_fig(loadings_fig_dt$dt, loadings_fig_dt$var) 
 # Save the figure
-ggsave(fig_path, fig, width = 6.39, height = 8.71, units = "in", dpi = 300)
+ggsave(loadings_fig_path, loadings_fig, 
+       width = 6.39, height = 8.71, 
+       units = "in", dpi = 300)

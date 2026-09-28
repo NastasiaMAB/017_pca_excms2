@@ -1,0 +1,11 @@
+Package: exc_ms2_pca
+Type: Project
+Title: Code to make loading plot and score plot
+Version: 0.1.0
+Depends:
+    R (>= 4.3.0)
+Imports:
+    tidyverse,
+    ggrepel,
+    ggpubr,
+    glue
