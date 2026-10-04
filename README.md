@@ -1,5 +1,5 @@
-**Creation date:** 2026-09-09
-**Author:** NMAB
+**Creation date:** 2026-09-09\
+**Author:** NMAB\
 **R version** used for this project: 4.3.3 (2024-02-29) -- "Angel Food Cake"
 
 ### Description:
@@ -8,8 +8,8 @@ that were provided.
 This is for ms2 of Excalibur project.
 
 ### How to proceed:
-1. Open the project folder in R/RStudio
-2. Run main.R
+1. Open the project folder in R/RStudio.
+2. Run main.R.
 
 ### Notes:
 - main.R runs renv::restore() on its firts line. 
