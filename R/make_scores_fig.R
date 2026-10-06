@@ -17,8 +17,8 @@ make_scores_fig <- function(dt, pc_var){
     geom_point(aes(colour = .data[[var2]], shape = .data[[var1]]), 
                size = 4, stroke = 1) +
     theme_classic() +
-    labs(x = score_axis_titles[1], 
-         y = score_axis_titles[2]) +
+    labs(x = pc_var[1], 
+         y = pc_var[2]) +
     scale_shape_manual(values = soil_sym) +
     scale_color_manual(values = trt_col) +
     scale_fill_manual(values = trt_col) +
