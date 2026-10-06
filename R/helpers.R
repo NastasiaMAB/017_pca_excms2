@@ -1,3 +1,7 @@
+# Load libraries
+#load_or_stop("tidyverse")
+
+
 # --- Load libraries ---
 load_or_stop <- function(pkg) {
   message("Looading pkg ", pkg, "...")
@@ -18,6 +22,7 @@ load_or_stop <- function(pkg) {
 
 # --- Pick input file ---
 file_select <- function(input_path = "data/data.csv"){
+  message("Loading ", input_path, "...")
   dt <- read_delim(input_path, 
                    delim = ",",
                    na = c("", "NA", "na", "N/A", "n/a", "NaN"),
@@ -33,7 +38,6 @@ file_select <- function(input_path = "data/data.csv"){
 
 # --- Define output paths ---
 make_output_path <- function(output_path, filename, ext ) {
-
   output_path <- match.arg(output_path, c("f", "t", "si_f", "si_t"))
   ext <- match.arg(ext, c("p", "j", "c", "x"))
 
@@ -54,8 +58,9 @@ make_output_path <- function(output_path, filename, ext ) {
   resolved_output_path <- output_path_map[[output_path]]
   resolved_ext <- ext_map[[ext]]
 
-  dir.create(output_path, showWarnings = FALSE, recursive = TRUE)
-  path <- file.path(output_path, paste0(filename, ext))
+  dir.create(resolved_output_path, showWarnings = FALSE, recursive = TRUE)
+  path <- file.path(resolved_output_path, paste0(filename, resolved_ext))
+  message("Creating output path: ", path)
   message("Output path created!")
   return(path)
 }

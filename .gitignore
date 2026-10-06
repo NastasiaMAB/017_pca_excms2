@@ -3,6 +3,7 @@ renv/library/
 .Rproj.user/
 .Rdata
 .Rhistory
+.Rapp.history
 data/
 figures/
 results/
