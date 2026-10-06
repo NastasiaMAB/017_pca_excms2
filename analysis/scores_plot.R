@@ -1,4 +1,4 @@
-# Source helper functions (contains the stop_and_load function)
+# Source helper functions (contains the load_or_stop function)
 source("R/helpers.R", echo = FALSE)
 # Source libraries
 invisible(lapply(
