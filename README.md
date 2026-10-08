@@ -13,5 +13,3 @@ This is for ms2 of Excalibur project.
 
 ### Notes:
 - main.R runs renv::restore() on its firts line. 
-- If you want to run the analyses separately, run the helpers before any other
-scripts.
