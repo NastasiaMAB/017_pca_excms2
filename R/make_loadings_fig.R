@@ -14,7 +14,8 @@ make_loadings_fig <- function(dt, pc_var){
                     min.segment.length = 0,
                     segment.color = "blue",
                     segment.size = 0.3,
-                    size = 4) +
+                    size = 4,
+                    force = 4) +
                     # For a version that shows all the variable 
                     # in geom_text_repel() 
                     # set max.overlaps = 20, force_pull = 0 and force = 5
